@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+    <title>Jeffrey Yu - Portfolio</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Navigation Bar */
+    nav {
+        background-color: #dfb787;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 250px;
+    }
+
+    nav .nav-left {
+        display: flex;
+        font-weight: bold;
+    }
+
+    nav .nav-right {
+        display: flex;
+        font-weight: bold;
+    }
+
+    nav a {
+        color: #000000;
+        text-decoration: none;
+        font-size: 18px;
+        margin: 0 5px;
+        padding: 10px 15px;
+        border-radius: 5px;
+
+        transition: background-color 0.4s ease,
+                    color 0.4s ease,
+                    transform 0.4s ease;
+    }
+
+    nav a:hover {
+        background-color: darkgreen;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    /* Page Background */
+    body {
+        background-color: lightgray;
+    }
+
+    /* Page Title */
+    .portfolio-title {
+        text-align: center;
+        font-size: 50px;
+        font-weight: bold;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    /* Project Container */
+    .projects {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px 60px 60px;
+    }
+
+    /* Individual Project Box */
+    .project-box {
+        background-color: rgba(255, 255, 255, 0.85);
+        width: 450px;
+        min-height: 500px;
+        padding: 25px;
+        border-radius: 12px;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+        transition: transform 0.4s ease,
+                    background-color 0.4s ease,
+                    box-shadow 0.4s ease;
+    }
+
+    .project-box:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Project Header */
+    .project-box h2 {
+        font-size: 30px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Project Image */
+    .project-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    /* Project Description */
+    .project-box p {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="nav-left">
+            <a href="portfolio.html">Portfolio</a>
+        </div>
+
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="qualifications.html">Qualifications</a>
+            <a href="activities.html">Activities</a>
+            <a href="sandbox.html">Sandbox</a>
+        </div>
+
+    </nav>
+
+    <div class="portfolio-title">
+        My Portfolio
+    </div>
+
+
+    <div class="projects">
+
+        <div class="project-box">
+
+            <h2>Bartering Software</h2>
+
+            <img src="barter.jpg" class="project-image">
+
+            <p>
+                A software where people can barter for items from others based on the 
+                value of their own item. I would like to recreate this project in the future
+                in order to benefit smaller communites, for example college students in college
+                Station.
+            </p>
+
+        </div>
+
+
+        <div class="project-box">
+
+            <h2>TAMUG Aquatics Robotics</h2>
+
+            <img src="tamug.jpg" class="project-image">
+
+            <p>
+                Contributed to an ongoing project of designing a functional underwater robot that
+                detects environments underwater. The project involved a mixture of hardware and
+                software, where team members collaborated together to fix wiring and backend coding
+                issues.
+            </p>
+
+        </div>
+
+
+        <div class="project-box">
+
+            <h2>Future Project - Floating Lyrics</h2>
+
+            <img src="spotify.png" class="project-image">
+
+            <p>
+                This project is something I want to tackle when I gain enough coding skills. 
+                I always liked to play music in the background when I work, and I would like to see
+                the lyrics around sometimes. This will be the primary project I will be focusing on.
+            </p>
+
+        </div>
+
+
+        <div class="project-box">
+
+            <h2>Future Project - Global Travel Pin</h2>
+
+            <img src="travel.png" class="project-image">
+
+            <p>
+                This project is something that did not come up to my mind at first. As I traveled to
+                more and more places in the past few years, I sometimes would lose track of the 
+                places I went to. As someone who likes to share journey experiences, this project can
+                store the image on the exact date, time, and geographical location and indicated.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

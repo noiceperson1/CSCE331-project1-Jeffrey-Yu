@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jeffrey Yu - Sandbox</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --blue: #176783;
+        --green: #2f7f1f;
+        --line: #102d3a;
+        --white: #fff;
+    }
+
+
+
+
+    nav {
+        background-color: #dfb787;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 250px;
+    }
+
+    nav .nav-left {
+        display: flex;
+        font-weight: bold;
+    }
+
+    nav .nav-right {
+        display: flex;
+        font-weight: bold;
+    }
+
+    nav a {
+        color: #000000;
+        text-decoration: none;
+
+        font-size: 18px;
+
+        margin: 0 5px;
+        padding: 10px 15px;
+
+        border-radius: 5px;
+
+        transition:
+            background-color 0.4s ease,
+            color 0.4s ease,
+            transform 0.4s ease;
+    }
+
+    nav a:hover {
+        background-color: darkgreen;
+        color: white;
+
+        transform: scale(1.1);
+    }
+
+
+
+    html,
+    body {
+        min-height: 100%;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        color: #111;
+
+        background: #eeeeee;
+    }
+
+
+    .sandbox-title {
+        text-align: center;
+
+        font-size: 40px;
+
+        font-weight: bold;
+
+        padding: 35px 0 20px;
+    }
+
+
+
+    .main {
+        min-height: calc(100vh - 100px);
+
+        padding: 40px 10px 80px;
+
+        display: grid;
+
+        grid-template-columns:
+            306px
+            minmax(440px, 1fr)
+            610px;
+
+        column-gap: 84px;
+
+        align-items: start;
+
+        max-width: 1700px;
+
+        margin: auto;
+    }
+
+
+
+    .summary {
+        height: 542px;
+
+        background: var(--blue);
+
+        border: 2px solid var(--line);
+
+        color: white;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 30px;
+
+        border-radius: 8px;
+    }
+
+
+
+    .center {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        min-width: 0;
+    }
+
+
+    .game-status {
+        width: 530px;
+
+        height: 64px;
+
+        border: 2px solid var(--line);
+
+        display: grid;
+
+        grid-template-columns:
+            1fr
+            1.15fr
+            1fr;
+
+        align-items: center;
+
+        text-align: center;
+
+        font-size: 29px;
+
+        margin-bottom: 40px;
+
+        background: white;
+    }
+
+    .inning {
+        white-space: nowrap;
+    }
+
+
+
+
+    .lineup {
+        width: 212px;
+
+        height: 278px;
+
+        border: 3px solid #111;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        grid-template-rows:
+            repeat(3, 1fr);
+
+        background: white;
+    }
+
+    .lineup div {
+        border-right: 2px solid #111;
+        border-bottom: 2px solid #111;
+    }
+
+    .lineup div:nth-child(3n) {
+        border-right: 0;
+    }
+
+    .lineup div:nth-last-child(-n+3) {
+        border-bottom: 0;
+    }
+
+
+
+    .diamond-area {
+        position: relative;
+
+        width: 150px;
+
+        height: 145px;
+
+        margin-top: 29px;
+    }
+
+    .base {
+        position: absolute;
+
+        width: 41px;
+
+        height: 41px;
+
+        border: 3px solid var(--line);
+
+        background: white;
+
+        transform: rotate(45deg);
+    }
+
+    .base.home {
+        left: 54px;
+        bottom: 2px;
+    }
+
+    .base.third {
+        left: 11px;
+        bottom: 45px;
+    }
+
+    .base.first {
+        right: 11px;
+        bottom: 45px;
+    }
+
+    .base.second {
+        left: 54px;
+        top: 3px;
+    }
+
+
+
+
+    .count {
+        display: flex;
+
+        gap: 16px;
+
+        margin-top: 5px;
+    }
+
+    .count-dot {
+        width: 15px;
+
+        height: 15px;
+
+        border: 3px solid var(--line);
+
+        border-radius: 50%;
+
+        background: white;
+    }
+
+
+    .scoreboard {
+        width: 610px;
+
+        border: 2px solid var(--line);
+
+        background: var(--blue);
+
+        border-radius: 8px;
+
+        overflow: hidden;
+    }
+
+    .score-title,
+    .stats-title {
+        height: 76px;
+
+        background: var(--green);
+
+        color: white;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 30px;
+    }
+
+
+
+    .teams {
+        height: 316px;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+    .team {
+        color: white;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 30px;
+
+        border-right: 2px solid var(--line);
+
+        text-align: center;
+    }
+
+    .team:last-child {
+        border-right: 0;
+    }
+
+
+
+
+    .stats-title {
+        border-top: 2px solid var(--line);
+
+        height: 150px;
+    }
+
+
+
+
+    @media (max-width: 1450px) {
+
+        .main {
+            grid-template-columns:
+                280px
+                minmax(350px, 1fr)
+                520px;
+
+            column-gap: 50px;
+        }
+
+        .scoreboard {
+            width: 520px;
+        }
+
+        .game-status {
+            width: 480px;
+        }
+
+    }
+
+
+    @media (max-width: 1100px) {
+
+        nav {
+            flex-direction: column;
+
+            gap: 10px;
+
+            padding: 15px 20px;
+        }
+
+        .main {
+            grid-template-columns: 1fr;
+
+            gap: 45px;
+
+            padding: 40px 25px 80px;
+        }
+
+        .summary {
+            height: 220px;
+
+            width: 100%;
+        }
+
+        .center {
+            order: 1;
+        }
+
+        .scoreboard {
+            order: 2;
+
+            width: 100%;
+
+            max-width: 610px;
+
+            margin: auto;
+        }
+
+        .summary {
+            order: 0;
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .nav-right {
+            flex-wrap: wrap;
+
+            justify-content: center;
+        }
+
+        .sandbox-title {
+            font-size: 30px;
+        }
+
+        .game-status {
+            width: 100%;
+
+            font-size: 20px;
+        }
+
+        .score-title,
+        .stats-title,
+        .team,
+        .summary {
+            font-size: 22px;
+        }
+
+        .teams {
+            height: 230px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+
+
+<nav>
+
+    <div class="nav-left">
+
+        <a href="sandbox.html">
+            Sandbox
+        </a>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="portfolio.html">
+            Portfolio
+        </a>
+
+        <a href="qualifications.html">
+            Qualifications
+        </a>
+
+        <a href="activities.html">
+            Activities
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+
+<div class="sandbox-title">
+    MLB Live Game Sandbox
+</div>
+
+
+
+
+<main class="main">
+
+
+
+
+    <section class="summary">
+
+        <span>
+            Game Summary
+        </span>
+
+    </section>
+
+
+
+
+    <section class="center">
+
+
+
+
+        <div class="game-status">
+
+            <div>
+                LAD 0
+            </div>
+
+            <div class="inning">
+                TOP 9
+            </div>
+
+            <div>
+                18 HOU
+            </div>
+
+        </div>
+
+
+
+
+        <div
+            class="lineup"
+            aria-label="Lineup grid">
+
+            <div></div>
+            <div></div>
+            <div></div>
+
+            <div></div>
+            <div></div>
+            <div></div>
+
+            <div></div>
+            <div></div>
+            <div></div>
+
+        </div>
+
+
+
+
+        <div
+            class="diamond-area"
+            aria-label="Baseball diamond">
+
+            <div class="base second"></div>
+
+            <div class="base third"></div>
+
+            <div class="base first"></div>
+
+
+
+        </div>
+
+
+
+        <div
+            class="count"
+            aria-label="Count">
+
+            <div class="count-dot"></div>
+
+            <div class="count-dot"></div>
+
+        </div>
+
+
+    </section>
+
+
+
+
+    <section class="scoreboard">
+
+
+        <div class="score-title">
+            Scoreboard
+        </div>
+
+
+        <div class="teams">
+
+            <div class="team">
+                Away Team
+            </div>
+
+            <div class="team">
+                Home Team
+            </div>
+
+        </div>
+
+
+        <div class="stats-title">
+            Stat Details
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

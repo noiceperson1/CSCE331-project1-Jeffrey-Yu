@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    background-color: maroon;
+}
+
+.site-header {
+    background-color: rgb(50, 150, 50);
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.homePageProfilePic {
+    position: relative;
+    width: 150px;
+    height: 350px;
+}
