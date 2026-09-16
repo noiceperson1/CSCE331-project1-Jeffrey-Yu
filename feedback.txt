@@ -1,0 +1,9 @@
+Kenny Le - I like how the website has a consistent design across the different pages, 
+    especially with the navigation bar and card layouts. One thing that could be improved
+    is making the website more responsive, since some of the fixed sizes and spacing might
+    look different on smaller screens.
+
+Christopher Jermia - The website does a good job separating information into different 
+    pages like Portfolio, Qualifications, and Activities, which makes it easy to navigate. 
+    I think adding a little more variety to the design of each page, while still keeping 
+    the same overall theme, could make the website feel more interesting and professional.

@@ -1,18 +1,324 @@
-body {
-    margin: 0;
-    background-color: maroon;
-}
 
-.site-header {
-    background-color: rgb(50, 150, 50);
-    padding: 20px;
-    text-align: center;
-    width: 100%;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+
+nav {
+    background-color: #dfb787;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 250px;
+}
+
+nav .nav-left {
+    display: flex;
+    font-weight: bold;
+}
+
+nav .nav-right {
+    display: flex;
+    font-weight: bold;
+}
+
+nav a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 5px;
+    padding: 10px 15px;
+    border-radius: 5px;
+
+    transition: background-color 0.4s ease,
+                color 0.4s ease,
+                transform 0.4s ease;
+}
+
+nav a:hover {
+    background-color: darkgreen;
+    color: white;
+    transform: scale(1.1);
+}
+
+
+body {
+    background-color: lightgray;
+    min-height: 100vh;
+}
+
+
+.activities-title, .portfolio-title {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+
+.activities-container, .projects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 60px 60px;
+}
+
+.projects {
+    padding-top: 20px;
+}
+
+.activity-box, .project-box {
+    background-color: rgba(255, 255, 255, 0.85);
+    width: 450px;
+    min-height: 500px;
+    padding: 25px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.4s ease,
+                background-color 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.activity-box:hover, .project-box:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+.activity-box h2, .project-box h2 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.activity-image, .project-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+
+.activity-box p, .project-box p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* qualifications */
+.qualifications-title {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 35px;
+}
+
+.qualifications-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 50px 60px;
+    gap: 30px;
+}
+
+.resume-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 90%;
+    min-height: 750px;
+    padding: 30px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.4s ease,
+                background-color 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.resume-box:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.resume-box h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.resume-placeholder {
+    width: 100%;
+    height: 620px;
+    border: 3px dashed gray;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 22px;
+    color: gray;
+    text-align: center;
+}
+
+.small-sections {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 90%;
+}
+
+.small-box {
+    background-color: rgba(255, 255, 255, 0.85);
+    width: 30%;
+    min-height: 220px;
+    padding: 25px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.4s ease,
+                background-color 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.small-box:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.small-box h2 {
+    font-size: 25px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.small-box p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+/* home */
 .homePageProfilePic {
-    position: relative;
-    width: 150px;
-    height: 350px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 30%;
+    position: absolute;
+    top: 120px;
+    right: 100px;
+    border: 4px solid white;
+}
+
+.homeheading {
+    background-color: rgba(255, 255, 255, 0.85);
+    width: 800px;
+    padding: 25px;
+    margin: 40px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    transition:
+        transform 0.4s ease,
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.homeheading:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.homeheading h2 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.homeheading p {
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.page-buttons {
+    width: 100%;
+    padding: 20px 40px 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.page-button {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: black;
+    text-decoration: none;
+    padding: 25px;
+    min-height: 180px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    transition:
+        transform 0.4s ease,
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.page-button:hover {
+    background-color: darkgreen;
+    color: white;
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.page-button h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.page-button p {
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 40px 40px;
+}
+
+.contact-buttons a {
+    background-color: #dfb787;
+    color: black;
+
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+
+    padding: 15px 40px;
+    border-radius: 8px;
+
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        transform 0.4s ease;
+}
+
+.contact-buttons a:hover {
+    background-color: darkgreen;
+    color: white;
+    transform: translateY(-5px);
 }
