@@ -1,644 +1,839 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Jeffrey Yu - Sandbox</title>
+<title>Jeffrey Yu - MLB Gameday Sandbox</title>
 
 <style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+:root {
+    --bg: #070d12;
+    --panel: #111920;
+    --panel2: #151f27;
+    --line: #263640;
+    --muted: #9aa8b2;
+    --text: #f4f7f9;
+    --blue: #1677c8;
+    --orange: #eb6e2f;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+nav {
+    height: 58px;
+    background: #10181f;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px;
+}
+
+nav .nav-left,
+nav .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+nav a {
+    color: #e8edf0;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 14px;
+    border-radius: 5px;
+}
+
+nav a:hover,
+nav .active {
+    background: #24343e;
+}
+
+.gameday-title {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: .3px;
+}
+
+.score-strip {
+    height: 82px;
+    padding: 10px 18px;
+    background: #10181f;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.mini-game {
+    min-width: 145px;
+    border: 1px solid #2b3a44;
+    border-radius: 7px;
+    background: #111a21;
+    padding: 8px 11px;
+}
+
+.mini-game.selected {
+    border: 2px solid #85939b;
+}
+
+.mini-state {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.mini-row {
+    display: flex;
+    justify-content: space-between;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.layout {
+    height: calc(100vh - 140px);
+    min-height: 680px;
+    padding: 14px 16px 18px;
+    display: grid;
+    grid-template-columns: 320px minmax(520px, 1fr) 650px;
+    gap: 14px;
+}
+
+.panel {
+    background: var(--panel);
+    border-radius: 7px;
+    border: 1px solid #111a20;
+    overflow: hidden;
+}
+
+.tabs {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 0 15px;
+    border-bottom: 1px solid var(--line);
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.tabs span:not(:first-child) {
+    color: #aeb7bd;
+}
+
+.venue {
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--line);
+    font-weight: bold;
+}
+
+.field {
+    height: 180px;
+    background:
+        linear-gradient(135deg, transparent 35%, #92795d 36%, #92795d 43%, transparent 44%),
+        linear-gradient(225deg, transparent 35%, #92795d 36%, #92795d 43%, transparent 44%),
+        linear-gradient(45deg, #3d5b31 0 50%, #506d3d 50%);
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.field::after {
+    content: "CF";
+    position: absolute;
+    top: 35px;
+    left: 48%;
+    background: white;
+    color: #111;
+    font-size: 9px;
+    padding: 2px 4px;
+}
+
+.play-list {
+    padding: 12px 15px 25px;
+}
+
+.play {
+    display: grid;
+    grid-template-columns: 34px 1fr auto;
+    gap: 10px;
+    padding: 13px 0;
+    border-bottom: 1px solid #202c34;
+}
+
+.number {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #d72e3d;
+    border: 2px solid white;
+    font-weight: bold;
+}
+
+.play small,
+.muted {
+    color: var(--muted);
+}
+
+.inning-heading {
+    font-size: 19px;
+    margin: 18px 0 8px;
+}
+
+.highlight {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    font-weight: bold;
+    line-height: 1.35;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    border-radius: 50%;
+    background: #e3aa22;
+    display: grid;
+    place-items: center;
+    color: #101820;
+    font-weight: 900;
+}
+
+.center-column {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.main-score {
+    height: 58px;
+    background: var(--panel);
+    border-radius: 7px;
+    display: grid;
+    grid-template-columns: 1fr 110px 1fr;
+    align-items: center;
+    text-align: center;
+}
+
+.team-score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    font-weight: bold;
+}
+
+.team-score .score {
+    font-size: 27px;
+}
+
+.team-score small {
+    display: block;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.final {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.stadium {
+    flex: 1;
+    min-height: 390px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 7px;
+    background:
+        linear-gradient(to bottom, #020305 0 40%, transparent 40%),
+        radial-gradient(ellipse at 50% 105%, #b58c58 0 22%, #3e6d38 23% 48%, #111c22 49% 100%);
+}
+
+.stadium::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 46%;
+    background:
+        linear-gradient(72deg, transparent 48%, rgba(255,255,255,.8) 49% 50%, transparent 51%),
+        linear-gradient(108deg, transparent 48%, rgba(255,255,255,.8) 49% 50%, transparent 51%);
+}
+
+.stadium-label {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    font-size: 28px;
+    font-weight: 900;
+    color: rgba(255,255,255,.75);
+}
+
+.strike-zone {
+    position: absolute;
+    width: 110px;
+    height: 145px;
+    left: 50%;
+    bottom: 70px;
+    transform: translateX(-50%);
+    border: 3px solid rgba(255,255,255,.75);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.strike-zone div {
+    border: 1px solid rgba(255,255,255,.3);
+}
+
+.pitch {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #d92e3c;
+    border: 2px solid white;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.p1 { left: 64%; top: 42%; }
+.p2 { left: 75%; top: 58%; }
+.p3 { left: 45%; top: 78%; }
+
+.matchup {
+    height: 112px;
+    background: var(--panel);
+    border-radius: 7px;
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    align-items: center;
+    padding: 12px 18px;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: bold;
+}
+
+.player.right {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.player-photo {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    font-weight: 900;
+    background: #f0a51d;
+    color: #101820;
+}
+
+.player.right .player-photo {
+    background: #174a91;
+    color: white;
+}
+
+.count-box {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.bases-display {
+    position: relative;
+    width: 54px;
+    height: 34px;
+    margin: 0 auto 10px;
+}
+
+.base-icon {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #dce5ea;
+    background: transparent;
+    transform: rotate(45deg);
+}
+
+.second-base {
+    top: 0;
+    left: 20px;
+}
+
+.third-base {
+    left: 5px;
+    bottom: 0;
+}
+
+.first-base {
+    right: 5px;
+    bottom: 0;
+}
+
+.outs-display {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.out-circle {
+    width: 11px;
+    height: 11px;
+    border: 2px solid #dce5ea;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.box-column {
+    min-width: 0;
+}
+
+.linescore {
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid var(--line);
+}
+
+.linescore table,
+.stats table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.linescore th,
+.linescore td {
+    padding: 7px 6px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.linescore th:first-child,
+.linescore td:first-child {
+    text-align: left;
+    font-weight: bold;
+    width: 125px;
+}
+
+.linescore th {
+    color: #aeb9c0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: calc(100% - 115px);
+}
+
+.stats {
+    padding: 10px 13px;
+    overflow: hidden;
+}
+
+.stats:first-child {
+    border-right: 1px solid var(--line);
+}
+
+.stats-title {
+    font-weight: bold;
+    padding: 5px 0 9px;
+    border-bottom: 1px solid var(--line);
+}
+
+.stats th,
+.stats td {
+    padding: 7px 3px;
+    font-size: 11px;
+    text-align: right;
+}
+
+.stats th {
+    color: #aeb9c0;
+}
+
+.stats th:first-child,
+.stats td:first-child {
+    text-align: left;
+}
+
+.notes {
+    border-top: 1px solid var(--line);
+    margin-top: 10px;
+    padding-top: 10px;
+    line-height: 1.65;
+    font-size: 11px;
+    color: #c8d0d5;
+}
+
+.notes strong {
+    color: white;
+}
+
+@media (max-width: 1250px) {
+    .layout {
+        grid-template-columns: 260px 1fr;
+        height: auto;
     }
 
-    :root {
-        --blue: #176783;
-        --green: #2f7f1f;
-        --line: #102d3a;
-        --white: #fff;
+    .box-column {
+        grid-column: 1 / -1;
+        min-height: 600px;
     }
+}
 
-
-
-
+@media (max-width: 850px) {
     nav {
-        background-color: #dfb787;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 250px;
-    }
-
-    nav .nav-left {
-        display: flex;
-        font-weight: bold;
+        height: auto;
+        padding: 12px;
+        align-items: flex-start;
     }
 
     nav .nav-right {
-        display: flex;
-        font-weight: bold;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
 
-    nav a {
-        color: #000000;
-        text-decoration: none;
-
-        font-size: 18px;
-
-        margin: 0 5px;
-        padding: 10px 15px;
-
-        border-radius: 5px;
-
-        transition:
-            background-color 0.4s ease,
-            color 0.4s ease,
-            transform 0.4s ease;
+    .score-strip {
+        display: none;
     }
 
-    nav a:hover {
-        background-color: darkgreen;
-        color: white;
-
-        transform: scale(1.1);
+    .layout {
+        grid-template-columns: 1fr;
+        height: auto;
     }
 
-
-
-    html,
-    body {
-        min-height: 100%;
-
-        font-family:
-            Arial,
-            Helvetica,
-            sans-serif;
-
-        color: #111;
-
-        background: #eeeeee;
+    .box-column {
+        grid-column: auto;
     }
 
-
-    .sandbox-title {
-        text-align: center;
-
-        font-size: 40px;
-
-        font-weight: bold;
-
-        padding: 35px 0 20px;
+    .stats-grid {
+        grid-template-columns: 1fr;
+        height: auto;
     }
 
-
-
-    .main {
-        min-height: calc(100vh - 100px);
-
-        padding: 40px 10px 80px;
-
-        display: grid;
-
-        grid-template-columns:
-            306px
-            minmax(440px, 1fr)
-            610px;
-
-        column-gap: 84px;
-
-        align-items: start;
-
-        max-width: 1700px;
-
-        margin: auto;
-    }
-
-
-
-    .summary {
-        height: 542px;
-
-        background: var(--blue);
-
-        border: 2px solid var(--line);
-
-        color: white;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        font-size: 30px;
-
-        border-radius: 8px;
-    }
-
-
-
-    .center {
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: center;
-
-        min-width: 0;
-    }
-
-
-    .game-status {
-        width: 530px;
-
-        height: 64px;
-
-        border: 2px solid var(--line);
-
-        display: grid;
-
-        grid-template-columns:
-            1fr
-            1.15fr
-            1fr;
-
-        align-items: center;
-
-        text-align: center;
-
-        font-size: 29px;
-
-        margin-bottom: 40px;
-
-        background: white;
-    }
-
-    .inning {
-        white-space: nowrap;
-    }
-
-
-
-
-    .lineup {
-        width: 212px;
-
-        height: 278px;
-
-        border: 3px solid #111;
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(3, 1fr);
-
-        grid-template-rows:
-            repeat(3, 1fr);
-
-        background: white;
-    }
-
-    .lineup div {
-        border-right: 2px solid #111;
-        border-bottom: 2px solid #111;
-    }
-
-    .lineup div:nth-child(3n) {
+    .stats:first-child {
         border-right: 0;
+        border-bottom: 1px solid var(--line);
     }
-
-    .lineup div:nth-last-child(-n+3) {
-        border-bottom: 0;
-    }
-
-
-
-    .diamond-area {
-        position: relative;
-
-        width: 150px;
-
-        height: 145px;
-
-        margin-top: 29px;
-    }
-
-    .base {
-        position: absolute;
-
-        width: 41px;
-
-        height: 41px;
-
-        border: 3px solid var(--line);
-
-        background: white;
-
-        transform: rotate(45deg);
-    }
-
-    .base.home {
-        left: 54px;
-        bottom: 2px;
-    }
-
-    .base.third {
-        left: 11px;
-        bottom: 45px;
-    }
-
-    .base.first {
-        right: 11px;
-        bottom: 45px;
-    }
-
-    .base.second {
-        left: 54px;
-        top: 3px;
-    }
-
-
-
-
-    .count {
-        display: flex;
-
-        gap: 16px;
-
-        margin-top: 5px;
-    }
-
-    .count-dot {
-        width: 15px;
-
-        height: 15px;
-
-        border: 3px solid var(--line);
-
-        border-radius: 50%;
-
-        background: white;
-    }
-
-
-    .scoreboard {
-        width: 610px;
-
-        border: 2px solid var(--line);
-
-        background: var(--blue);
-
-        border-radius: 8px;
-
-        overflow: hidden;
-    }
-
-    .score-title,
-    .stats-title {
-        height: 76px;
-
-        background: var(--green);
-
-        color: white;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        font-size: 30px;
-    }
-
-
-
-    .teams {
-        height: 316px;
-
-        display: grid;
-
-        grid-template-columns:
-            1fr
-            1fr;
-    }
-
-    .team {
-        color: white;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        font-size: 30px;
-
-        border-right: 2px solid var(--line);
-
-        text-align: center;
-    }
-
-    .team:last-child {
-        border-right: 0;
-    }
-
-
-
-
-    .stats-title {
-        border-top: 2px solid var(--line);
-
-        height: 150px;
-    }
-
-
-
-
-    @media (max-width: 1450px) {
-
-        .main {
-            grid-template-columns:
-                280px
-                minmax(350px, 1fr)
-                520px;
-
-            column-gap: 50px;
-        }
-
-        .scoreboard {
-            width: 520px;
-        }
-
-        .game-status {
-            width: 480px;
-        }
-
-    }
-
-
-    @media (max-width: 1100px) {
-
-        nav {
-            flex-direction: column;
-
-            gap: 10px;
-
-            padding: 15px 20px;
-        }
-
-        .main {
-            grid-template-columns: 1fr;
-
-            gap: 45px;
-
-            padding: 40px 25px 80px;
-        }
-
-        .summary {
-            height: 220px;
-
-            width: 100%;
-        }
-
-        .center {
-            order: 1;
-        }
-
-        .scoreboard {
-            order: 2;
-
-            width: 100%;
-
-            max-width: 610px;
-
-            margin: auto;
-        }
-
-        .summary {
-            order: 0;
-        }
-
-    }
-
-
-    @media (max-width: 600px) {
-
-        .nav-right {
-            flex-wrap: wrap;
-
-            justify-content: center;
-        }
-
-        .sandbox-title {
-            font-size: 30px;
-        }
-
-        .game-status {
-            width: 100%;
-
-            font-size: 20px;
-        }
-
-        .score-title,
-        .stats-title,
-        .team,
-        .summary {
-            font-size: 22px;
-        }
-
-        .teams {
-            height: 230px;
-        }
-
-    }
-
+}
 </style>
-
-
 </head>
 
 <body>
 
-
-
 <nav>
-
     <div class="nav-left">
-
-        <a href="sandbox.html">
-            Sandbox
-        </a>
-
+        <a class="gameday-title" href="https://www.mlb.com/scores" target="_blank"> MLB Gameday Sandbox </a>
+        <a class="active" href="sandbox.html">Sandbox</a>
     </div>
-
 
     <div class="nav-right">
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="portfolio.html">
-            Portfolio
-        </a>
-
-        <a href="qualifications.html">
-            Qualifications
-        </a>
-
-        <a href="activities.html">
-            Activities
-        </a>
-
+        <a href="index.html">Home</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="activities.html">Activities</a>
     </div>
-
 </nav>
 
+<section class="score-strip">
+    <div class="mini-game selected">
+        <div class="mini-state">FINAL</div>
+        <div class="mini-row"><span>HOU</span><span>18</span></div>
+        <div class="mini-row"><span>LAD</span><span>1</span></div>
+    </div>
+    <div class="mini-game">
+        <div class="mini-state">FINAL</div>
+        <div class="mini-row"><span>BOS</span><span>11</span></div>
+        <div class="mini-row"><span>WSH</span><span>2</span></div>
+    </div>
+    <div class="mini-game">
+        <div class="mini-state">FINAL</div>
+        <div class="mini-row"><span>CIN</span><span>9</span></div>
+        <div class="mini-row"><span>PHI</span><span>6</span></div>
+    </div>
+    <div class="mini-game">
+        <div class="mini-state">FINAL</div>
+        <div class="mini-row"><span>NYY</span><span>5</span></div>
+        <div class="mini-row"><span>NYM</span><span>6</span></div>
+    </div>
+    <div class="mini-game">
+        <div class="mini-state">FINAL</div>
+        <div class="mini-row"><span>TEX</span><span>2</span></div>
+        <div class="mini-row"><span>SD</span><span>3</span></div>
+    </div>
+    <div class="mini-game">
+        <div class="mini-state">FINAL</div>
+        <div class="mini-row"><span>DET</span><span>2</span></div>
+        <div class="mini-row"><span>CLE</span><span>1</span></div>
+    </div>
+    <div class="mini-game">
+        <div class="mini-state">FINAL</div>
+        <div class="mini-row"><span>MIL</span><span>6</span></div>
+        <div class="mini-row"><span>MIA</span><span>5</span></div>
+    </div>
+</section>
 
+<main class="layout">
 
+    <section class="panel">
+        <div class="tabs">
+            <span>Live</span>
+            <span>Summary</span>
+            <span>Video</span>
+        </div>
 
-<div class="sandbox-title">
-    <a href="https://www.mlb.com/scores" target="_blank">
-        MLB Live Game Sandbox
-    </a>
-</div>
+        <div class="venue">Dodger Stadium</div>
+        <div class="field"></div>
 
+        <div class="play-list">
+            <div class="play">
+                <div class="number">3</div>
+                <div><strong>Strike</strong><br><small>91.8 mph Sinker</small></div>
+                <strong>0 - 2</strong>
+            </div>
 
+            <div class="play">
+                <div class="number">2</div>
+                <div><strong>Strike</strong><br><small>84.3 mph Splitter</small></div>
+                <strong>0 - 2</strong>
+            </div>
 
+            <div class="play">
+                <div class="number">1</div>
+                <div><strong>Strike</strong><br><small>91.9 mph Sinker</small></div>
+                <strong>0 - 1</strong>
+            </div>
 
-<main class="main">
+            <h2 class="inning-heading">Game Highlights</h2>
 
+            <div class="highlight">
+                <div class="avatar">JA</div>
+                <div>Jose Altuve hits his second home run of the game.</div>
+            </div>
 
+            <div class="highlight">
+                <div class="avatar">VC</div>
+                <div>Victor Caratini launches a grand slam in Houston's 10-run sixth.</div>
+            </div>
 
-
-    <section class="summary">
-
-        <span>
-            Game Summary
-        </span>
-
+            <div class="highlight">
+                <div class="avatar">CW</div>
+                <div>Christian Walker homers and helps Houston finish the 18-1 win.</div>
+            </div>
+        </div>
     </section>
 
-
-
-
-    <section class="center">
-
-
-
-
-        <div class="game-status">
-
-            <div>
-                LAD 0
+    <section class="center-column">
+        <div class="main-score">
+            <div class="team-score">
+                <div>
+                    <strong>HOU</strong>
+                    <small>Houston Astros</small>
+                </div>
+                <span class="score">18</span>
             </div>
 
-            <div class="inning">
-                TOP 9
+            <div class="final">FINAL</div>
+
+            <div class="team-score">
+                <span class="score">1</span>
+                <div>
+                    <strong>LAD</strong>
+                    <small>Los Angeles Dodgers</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="stadium">
+            <div class="stadium-label">DODGER STADIUM</div>
+
+            <div class="strike-zone">
+                <div></div><div></div><div></div>
+                <div></div><div></div><div></div>
+                <div></div><div></div><div></div>
+
+                <span class="pitch p1">1</span>
+                <span class="pitch p2">2</span>
+                <span class="pitch p3">3</span>
+            </div>
+        </div>
+
+        <div class="matchup">
+            <div class="player">
+                                <div>
+                    Jason Alexander
+                    <div class="muted">RHP · Save</div>
+                </div>
             </div>
 
-            <div>
-                18 HOU
+            <div class="count-box">
+                <div class="bases-display" aria-label="Bases">
+                    <span class="base-icon second-base"></span>
+                    <span class="base-icon third-base"></span>
+                    <span class="base-icon first-base"></span>
+                </div>
+                <div class="outs-display" aria-label="Outs">
+                    <span class="out-circle"></span>
+                    <span class="out-circle"></span>
+                </div>
             </div>
 
+            <div class="player right">
+                <div>
+                    Dalton Rushing
+                    <div class="muted">C · Dodgers</div>
+                </div>
+                            </div>
         </div>
-
-
-
-
-        <div
-            class="lineup"
-            aria-label="Lineup grid">
-
-            <div></div>
-            <div></div>
-            <div></div>
-
-            <div></div>
-            <div></div>
-            <div></div>
-
-            <div></div>
-            <div></div>
-            <div></div>
-
-        </div>
-
-
-
-
-        <div
-            class="diamond-area"
-            aria-label="Baseball diamond">
-
-            <div class="base second"></div>
-
-            <div class="base third"></div>
-
-            <div class="base first"></div>
-
-
-
-        </div>
-
-
-
-        <div
-            class="count"
-            aria-label="Count">
-
-            <div class="count-dot"></div>
-
-            <div class="count-dot"></div>
-
-        </div>
-
-
     </section>
 
-
-
-
-    <section class="scoreboard">
-
-
-        <div class="score-title">
-            Scoreboard
+    <section class="panel box-column">
+        <div class="linescore">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+                        <th>6</th><th>7</th><th>8</th><th>9</th>
+                        <th>R</th><th>H</th><th>E</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Astros</td>
+                        <td>2</td><td>0</td><td>4</td><td>0</td><td>1</td>
+                        <td>10</td><td>1</td><td>0</td><td>0</td>
+                        <td><strong>18</strong></td><td>20</td><td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Dodgers</td>
+                        <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                        <td><strong>1</strong></td><td>6</td><td>1</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
+        <div class="stats-grid">
+            <div class="stats">
+                <div class="stats-title">Astros — HOU</div>
+                <table>
+                    <thead>
+                        <tr><th>Batter</th><th>AB</th><th>R</th><th>H</th><th>RBI</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>I. Paredes</td><td>5</td><td>2</td><td>2</td><td>1</td></tr>
+                        <tr><td>J. Meyers</td><td>6</td><td>2</td><td>3</td><td>1</td></tr>
+                        <tr><td>J. Altuve</td><td>5</td><td>3</td><td>3</td><td>5</td></tr>
+                        <tr><td>C. Smith</td><td>5</td><td>2</td><td>2</td><td>1</td></tr>
+                        <tr><td>C. Walker</td><td>4</td><td>2</td><td>2</td><td>4</td></tr>
+                        <tr><td>Y. Diaz</td><td>5</td><td>1</td><td>2</td><td>1</td></tr>
+                        <tr><td>C. Hummel</td><td>5</td><td>2</td><td>2</td><td>1</td></tr>
+                        <tr><td>M. Dubón</td><td>5</td><td>2</td><td>2</td><td>0</td></tr>
+                        <tr><td>Z. Short</td><td>4</td><td>1</td><td>1</td><td>0</td></tr>
+                    </tbody>
+                </table>
 
-        <div class="teams">
-
-            <div class="team">
-                Away Team
+                <div class="notes">
+                    <strong>Highlights</strong><br>
+                    Altuve: two home runs.<br>
+                    Caratini: grand slam.<br>
+                    Houston scored 10 runs in the sixth inning.
+                </div>
             </div>
 
-            <div class="team">
-                Home Team
+            <div class="stats">
+                <div class="stats-title">Dodgers — LAD</div>
+                <table>
+                    <thead>
+                        <tr><th>Batter</th><th>AB</th><th>R</th><th>H</th><th>RBI</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>S. Ohtani</td><td>4</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>M. Betts</td><td>4</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>F. Freeman</td><td>3</td><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>W. Smith</td><td>3</td><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td>A. Pages</td><td>4</td><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>M. Conforto</td><td>3</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>H. Kim</td><td>3</td><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>M. Rojas</td><td>3</td><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>D. Rushing</td><td>3</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="notes">
+                    <strong>Scoring</strong><br>
+                    Will Smith hit a solo home run in the second inning.<br><br>
+                    <strong>Final</strong><br>
+                    Houston 18, Los Angeles 1.
+                </div>
             </div>
-
         </div>
-
-
-        <div class="stats-title">
-            Stat Details
-        </div>
-
-
     </section>
-
 
 </main>
-
-
 </body>
-
 </html>
+
+<!-- v2: pitch label corrected, placeholder portraits removed, bases/outs display added -->
+
+<style>
+/* v3 visual fixes */
+
+/* Left field visual */
+.field {
+    background: #315f3a;
+}
+
+/* Main center field visual */
+.stadium {
+    background: #315f3a;
+}
+
+/* Remove the previous stadium field-line overlay so the green area stays simple */
+.stadium::before {
+    display: none;
+}
+
+/* Make strike zone highly visible against green */
+.strike-zone {
+    border: 4px solid #ffffff;
+    background: rgba(0, 0, 0, 0.16);
+    z-index: 5;
+}
+
+.strike-zone div {
+    border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+/* Keep pitch markers above the strike-zone grid */
+.pitch {
+    z-index: 6;
+}
+</style>

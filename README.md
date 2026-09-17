@@ -22,3 +22,15 @@ External Links
 3. GitHub: https://github.com/noiceperson1
 4. WeChat: https://people.tamu.edu/~yzq/wechat.jpg
 5. MLB Page (access through sandbox): https://www.mlb.com/scores
+
+
+Release 2 AI Prompts
+1. this is the current sandbox page. Take the following link https://www.mlb.com/gameday/astros-vs-dodgers/2025/07/04/777235/final/box, 
+    update the sandbox page so it looks like this (attached image of ongoing gameday page)
+2. some things to fix: 
+    top left should either say strike or balls, 
+    not outs the two images look out of scope, 
+    fix that the center bottom should have a bases and two circles to represent outs
+3. change top left all 3 to strikes to make it easier
+    just make the 2 backgrounds green but the strike box must be visible
+4. make the mlb gameday sandbox title link to actual gameday page
