@@ -60,19 +60,28 @@ uses dark blue as the main theme and information took over more of the webpage, 
 ## External Links
 
 1. **Email:** [jry425@gmail.com](mailto:jry425@gmail.com)
-    The link is located at the bottom of the index page, which can be accessed by clicking on the 
+
+    * The link is located at the bottom of the index page, which can be accessed by clicking on the 
     "Email Me" button. The user will then be directed to a page where they will be instructed to email to the dedicated address.
+
 2. **LinkedIn:** [Jeffrey Yu](https://www.linkedin.com/in/jeffrey-yu-02904534a/)
-    The link is located at the bottom of the index page, which can be accessed by clicking on the 
+
+    * The link is located at the bottom of the index page, which can be accessed by clicking on the 
     "LinkedIn" button. The user will be directed to the LinkedIn profile page.
+
 3. **GitHub:** [noiceperson1](https://github.com/noiceperson1)
-    The link is located at the bottom of the index page, which can be accessed by clicking on the 
+
+    * The link is located at the bottom of the index page, which can be accessed by clicking on the 
     "GitHub" button. The user will be directed to the GitHub user profile page, where they can view public projects.
+
 4. **WeChat:** [WeChat QR Code](https://people.tamu.edu/~yzq/wechat.jpg)
-    The link is located at the bottom of the index page, which can be accessed by clicking on the 
+
+    * The link is located at the bottom of the index page, which can be accessed by clicking on the 
     "WeChat" button. The user will be directed to a webpage where they will be able to scan a QR code, which directs to my WeChat profile.
+
 5. **MLB Page (access through Sandbox):** [MLB Scores](https://www.mlb.com/scores)
-    The link is located at the top left of the sandbox page, which can be access by clicking on the 
+
+    * The link is located at the top left of the sandbox page, which can be access by clicking on the 
     title "MLB Gameday Sandbox". The user will be directed to the webpage that displays the MLB games that will be played on the same day.
 
 
